@@ -1,15 +1,10 @@
 package iteratorcomposite;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by stillFox on 16/12/30.
  */
-// Iterator
-public interface Iterator {
-    boolean hasNext();
-    Object next();
-}
-
 // Concrete Iterator
 class DinerMenuIterator implements Iterator {
     MenuItem[] items;
@@ -32,28 +27,17 @@ class DinerMenuIterator implements Iterator {
             return true;
         }
     }
-}
-
-// Concrete Iterator
-class PancakeHouseMenuIterator implements Iterator {
-    ArrayList items;
-    int position = 0;
-
-    public PancakeHouseMenuIterator(ArrayList items) {
-        this.items = items;
-    }
-
-    public Object next() {
-        Object menuItem = items.get(position);
-        position = position + 1;
-        return menuItem;
-    }
-
-    public boolean hasNext() {
-        if (position >= items.size()) {
-            return false;
-        } else {
-            return true;
+    public void remove() {
+        if (position <= 0) {
+            throw new IllegalStateException("You can't remove an item until you've done at least one next()");
+        }
+        if (items[position-1] != null) {
+            for (int i = position-1; i < (items.length-1); i++) {
+                items[i] = items[i+1];
+            }
+            items[items.length-1] = null;
         }
     }
 }
+
+

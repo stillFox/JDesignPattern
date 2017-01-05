@@ -1,15 +1,18 @@
 package iteratorcomposite;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by stillFox on 16/12/30.
  */
 
 // Aggregate
-public class Menu {}
+public interface Menu {
+    public Iterator createIterator();
+}
 
 // ConcreteAggregate
-class DinerMenu {
+class DinerMenu implements Menu{
     static final int MAX_ITEMS = 6;
     int numberOfItems = 0;
     MenuItem[] menuItems;
@@ -39,7 +42,7 @@ class DinerMenu {
 }
 
 // ConcreteAggregate
-class PancakeHouseMenu {
+class PancakeHouseMenu implements Menu{
     ArrayList menuItems;
 
     public PancakeHouseMenu() {
@@ -52,7 +55,7 @@ class PancakeHouseMenu {
     }
 
     public Iterator createIterator() {
-        return new PancakeHouseMenuIterator(menuItems);
+        return menuItems.iterator();
     }
 
     public void addItem(String name, String description, boolean vegetarian, double price) {
