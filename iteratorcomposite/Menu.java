@@ -1,6 +1,5 @@
 package iteratorcomposite;
-
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * Created by stillFox on 16/12/30.
@@ -34,8 +33,8 @@ class DinerMenu {
         }
     }
 
-    public MenuItem[] getMenuItems() {
-        return menuItems;
+    public Iterator createIterator() {
+        return new DinerMenuIterator(menuItems);
     }
 }
 
@@ -52,12 +51,12 @@ class PancakeHouseMenu {
         addItem("Waffles", "Waffles, with your choice of blueberries or strawberries", true, 3.59);
     }
 
+    public Iterator createIterator() {
+        return new PancakeHouseMenuIterator(menuItems);
+    }
+
     public void addItem(String name, String description, boolean vegetarian, double price) {
         MenuItem menuItem = new MenuItem(name, description, vegetarian, price);
         menuItems.add(menuItem);
-    }
-
-    public ArrayList getMenuItems() {
-        return menuItems;
     }
 }
