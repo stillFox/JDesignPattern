@@ -7,86 +7,46 @@ import java.util.Iterator;
  * Created by stillFox on 16/12/30.
  */
 
-// Aggregate
-public interface Menu {
-    public Iterator createIterator();
-}
+// Component
+class Menu extends MenuComponent {
+    ArrayList menuComponents = new ArrayList();
+    String name;
+    String description;
 
-// ConcreteAggregate
-class DinerMenu implements Menu{
-    static final int MAX_ITEMS = 6;
-    int numberOfItems = 0;
-    MenuItem[] menuItems;
-
-    public DinerMenu() {
-        menuItems = new MenuItem[MAX_ITEMS];
-
-        addItem("Vegetarian BLT","(Fakin') Bacon with lettuce & tomato on whole wheat", true, 2.99);
-        addItem("BLT", "Bacon with lettuce & tomato on whole wheat", false, 2.99);
-        addItem("Soup of the day", "Soup of the day, with a side of potato salad", false, 3.29);
-        addItem("Hotdog", "A hot dog, with saurkraut, relish, onions, topped with cheese", false, 3.05);
+    public Menu(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 
-    public void addItem(String name, String description, boolean vegetarian, double price) {
-        MenuItem menuItem = new MenuItem(name, description, vegetarian, price);
-        if (numberOfItems >= MAX_ITEMS) {
-            System.err.println("Sorry, menu is full! Can't add item to menu");
-        } else {
-            menuItems[numberOfItems] = menuItem;
-            numberOfItems = numberOfItems + 1;
+    public void add(MenuComponent menuComponent) {
+        menuComponents.add(menuComponent);
+    }
+
+    public void remove(MenuComponent menuComponent) {
+        menuComponents.remove(menuComponent);
+    }
+
+    public MenuComponent getChild(int i) {
+        return (MenuComponent)menuComponents.get(i);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void print() {
+        System.out.print("\n" + getName());
+        System.out.println(", " + getDescription());
+        System.out.println("---------------------");
+
+        Iterator iterator = menuComponents.iterator();
+        while (iterator.hasNext()) {
+            MenuComponent menuComponent = (MenuComponent)iterator.next();
+            menuComponent.print();
         }
-    }
-
-    public Iterator createIterator() {
-        return new DinerMenuIterator(menuItems);
-    }
-}
-
-// ConcreteAggregate
-class PancakeHouseMenu implements Menu{
-    ArrayList menuItems;
-
-    public PancakeHouseMenu() {
-        menuItems = new ArrayList();
-
-        addItem("K&B's Pancake Breakfast", "Pancakes with scrambled eggs, and toast", true, 2.99);
-        addItem("Regular Pancake Breakfast", "Pancakes with fried eggs, sausage", false, 2.99);
-        addItem("Blueberry Pancakes", "Pancakes made with fresh blueberries", true, 3.59);
-        addItem("Waffles", "Waffles, with your choice of blueberries or strawberries", true, 3.59);
-    }
-
-    public Iterator createIterator() {
-        return menuItems.iterator();
-    }
-
-    public void addItem(String name, String description, boolean vegetarian, double price) {
-        MenuItem menuItem = new MenuItem(name, description, vegetarian, price);
-        menuItems.add(menuItem);
-    }
-}
-
-// ConcreteAggregate
-class CafeMenu implements Menu {
-    Hashtable menuItems = new Hashtable();
-
-    public CafeMenu() {
-        addItem("Veggie Burger and Air Fries",
-                "Veggie burger on a whole wheat bun, lettuce, tomato, and fries",
-                true, 3.99);
-        addItem("Soup of the day",
-                "A cup fo the soup of the day, with a side salad",
-                true, 3.69);
-        addItem("Burrito",
-                "A large burrito, with whole pinto beans, salsa, guacamole",
-                true, 4.29);
-    }
-
-    public void addItem(String name, String description, boolean vegetarian, double price) {
-        MenuItem menuItem = new MenuItem(name, description, vegetarian, price);
-        menuItems.put(menuItem.getName(), menuItem);
-    }
-
-    public Iterator createIterator() {
-        return menuItems.values().iterator();
     }
 }

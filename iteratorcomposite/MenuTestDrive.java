@@ -1,20 +1,36 @@
 package iteratorcomposite;
 
-import java.util.ArrayList;
-
 /**
  * Created by stillFox on 16/12/30.
  */
+//    Component pattern version
 public class MenuTestDrive {
     public static void main(String[] args) {
-        PancakeHouseMenu pancakeHouseMenu = new PancakeHouseMenu();
-        DinerMenu dinerMenu = new DinerMenu();
-        CafeMenu cafeMenu = new CafeMenu();
-        ArrayList menus = new ArrayList();
-        menus.add(pancakeHouseMenu);
-        menus.add(dinerMenu);
-        menus.add(cafeMenu);
-        Waitress waitress = new Waitress(menus);
+        MenuComponent pancakeHouseMenu = new Menu("PANCAKE HOUSE MENU", "Breakfast");
+        MenuComponent dinerMenu = new Menu("DINER MENU", "Lunch");
+        MenuComponent cafeMenu = new Menu("CAFE MENU", "Dinner");
+        MenuComponent dessertMenu = new Menu("DESSERT MENU", "Dessert of course!");
+
+        MenuComponent allMenus = new Menu("ALL MENUS", "All menus combined");
+
+        allMenus.add(pancakeHouseMenu);
+        allMenus.add(dessertMenu);
+        allMenus.add(cafeMenu);
+
+        dinerMenu.add(new MenuItem(
+                "Pasta",
+                "Spaghetti with Marinara Sauce, and a slice of sourdough bread",
+                true, 3.89
+        ));
+        dinerMenu.add(dessertMenu);
+
+        dessertMenu.add(new MenuItem(
+                "Apple Pie",
+                "Apple pie with a flakey crust, topped with vanilla ice cream",
+                true, 1.59
+        ));
+
+        Waitress waitress = new Waitress(allMenus);
         waitress.printMenu();
     }
 }
