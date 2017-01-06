@@ -1,5 +1,7 @@
 package iteratorcomposite;
 
+import java.util.ArrayList;
+
 /**
  * Created by stillFox on 16/12/30.
  */
@@ -8,8 +10,11 @@ public class MenuTestDrive {
         PancakeHouseMenu pancakeHouseMenu = new PancakeHouseMenu();
         DinerMenu dinerMenu = new DinerMenu();
         CafeMenu cafeMenu = new CafeMenu();
-
-        Waitress waitress = new Waitress(pancakeHouseMenu, dinerMenu, cafeMenu);
+        ArrayList menus = new ArrayList();
+        menus.add(pancakeHouseMenu);
+        menus.add(dinerMenu);
+        menus.add(cafeMenu);
+        Waitress waitress = new Waitress(menus);
         waitress.printMenu();
     }
 }

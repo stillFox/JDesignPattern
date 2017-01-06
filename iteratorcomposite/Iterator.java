@@ -1,5 +1,6 @@
 package iteratorcomposite;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 
 /**
@@ -40,4 +41,31 @@ class DinerMenuIterator implements Iterator {
     }
 }
 
+class AlternatingDinerMenuIterator implements Iterator {
+    MenuItem[] items;
+    int postion;
 
+    public AlternatingDinerMenuIterator(MenuItem[] items) {
+        this.items = items;
+        Calendar rightNow = Calendar.getInstance();
+        postion = rightNow.get(Calendar.DAY_OF_WEEK) % 2;
+    }
+
+    public Object next() {
+        MenuItem menuItem = items[postion];
+        postion = postion + 2;
+        return menuItem;
+    }
+
+    public boolean hasNext() {
+        if (postion >= items.length || items[postion] == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public void remove() {
+        throw new UnsupportedOperationException("Alternating Diner Menu Iterator does not support remove()");
+    }
+}
