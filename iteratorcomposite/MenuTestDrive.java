@@ -14,7 +14,7 @@ public class MenuTestDrive {
         MenuComponent allMenus = new Menu("ALL MENUS", "All menus combined");
 
         allMenus.add(pancakeHouseMenu);
-        allMenus.add(dessertMenu);
+        allMenus.add(dinerMenu);
         allMenus.add(cafeMenu);
 
         dinerMenu.add(new MenuItem(
