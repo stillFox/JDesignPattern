@@ -1,7 +1,5 @@
 package iteratorcomposite;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * Created by stillFox on 16/12/30.
@@ -67,5 +65,58 @@ class AlternatingDinerMenuIterator implements Iterator {
 
     public void remove() {
         throw new UnsupportedOperationException("Alternating Diner Menu Iterator does not support remove()");
+    }
+}
+
+class CompositeIterator implements Iterator {
+    Stack stack = new Stack();
+
+    public CompositeIterator(Iterator iterator) {
+        stack.push(iterator);
+    }
+
+    public Object next() {
+        if (hasNext()) {
+            Iterator iterator = (Iterator) stack.peek();
+            MenuComponent component = (MenuComponent)iterator.next();
+            if (component instanceof Menu) {
+                stack.push(component.createIterator());
+            }
+            return component;
+        } else {
+            return null;
+        }
+    }
+
+    public boolean hasNext() {
+        if (stack.empty()) {
+            return false;
+        } else {
+            Iterator iterator = (Iterator)stack.peek();
+            if (!iterator.hasNext()) {
+                stack.pop();
+                return hasNext();
+            } else {
+                return true;
+            }
+        }
+    }
+
+    public void remove() {
+        throw new UnsupportedOperationException();
+    }
+}
+
+class NullIterator implements Iterator {
+    public Object next() {
+        return null;
+    }
+
+    public boolean hasNext() {
+        return false;
+    }
+
+    public void remove() {
+        throw new UnsupportedOperationException();
     }
 }

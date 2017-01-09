@@ -1,5 +1,7 @@
 package iteratorcomposite;
 
+import java.util.Iterator;
+
 /**
  * Created by stillFox on 16/12/30.
  */
@@ -39,5 +41,9 @@ public class MenuItem extends MenuComponent {
         }
         System.out.println(", " + getPrice());
         System.out.println("    -- " + getDescription());
+    }
+
+    public Iterator createIterator() {
+        return new NullIterator();
     }
 }

@@ -1,5 +1,7 @@
 package iteratorcomposite;
 
+import java.util.Iterator;
+
 /**
  * Created by stillFox on 17/1/3.
  */
@@ -33,6 +35,10 @@ public abstract class MenuComponent {
     }
 
     public void print() {
+        throw new UnsupportedOperationException();
+    }
+
+    public Iterator createIterator() {
         throw new UnsupportedOperationException();
     }
 }
